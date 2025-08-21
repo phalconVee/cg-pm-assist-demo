@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* TurboTax Clone Design System - Professional tax application styling */
+
+@layer base {
+  :root {
+    /* Primary TurboTax-inspired color palette */
+    --background: 0 0% 98%;
+    --foreground: 215 25% 27%;
+
+    /* Card and surface colors */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 27%;
+    --card-shadow: 215 25% 27% / 0.08;
+
+    /* Primary brand colors - TurboTax blue */
+    --primary: 214 67% 39%; /* #205ea3 */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 214 70% 30%; /* #17497f */
+
+    /* Secondary colors for accents */
+    --secondary: 158 64% 47%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 158 64% 42%;
+
+    /* Muted colors for subtle elements */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 13% 65%;
+
+    /* Success colors for completed sections */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 142 71% 95%;
+
+    /* Warning colors for attention items */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 38 92% 95%;
+
+    /* Error colors for validation */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-light: 0 84% 95%;
+
+    /* Form elements */
+    --border: 214 32% 91%;
+    --input: 0 0% 100%;
+    --input-border: 214 32% 91%;
+    --input-focus: 211 100% 43%;
+    --ring: 211 100% 43% / 0.2;
+
+    /* Progress indicators */
+    --progress-bg: 210 40% 94%;
+    --progress-complete: 142 71% 45%;
+    --progress-current: 211 100% 43%;
+    --progress-active: 174 100% 41%; /* #00d4b1 */
+    
+    /* Toggle switch */
+    --toggle-off: 196 13% 59%; /* #859299 */
+    
+    /* Header nav colors */
+    --nav-refund: 157 100% 26%; /* #00856d */
+
+    /* Geometric design elements */
+    --radius: 2px;
+    --radius-lg: 4px;
+    --radius-xl: 6px;
+
+    /* Shadows for depth */
+    --shadow-sm: 0 1px 2px 0 hsl(215 25% 27% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(215 25% 27% / 0.1), 0 2px 4px -1px hsl(215 25% 27% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(215 25% 27% / 0.1), 0 4px 6px -2px hsl(215 25% 27% / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(215 25% 27% / 0.1), 0 10px 10px -5px hsl(215 25% 27% / 0.04);
+
+    /* Transitions */
+    --transition-base: all 0.2s ease-in-out;
+    --transition-colors: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, text-decoration-color 0.2s ease-in-out, fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
+
+    /* Layout */
+    --max-width: 1200px;
+    --section-padding: 2rem;
+    
+    /* Sidebar */
+    --sidebar-bg: 56 10% 95%; /* #F4F4EF converted to HSL */
+  }
+
+  .dark {
+    --background: 215 28% 17%;
+    --foreground: 210 40% 98%;
+    --card: 215 28% 17%;
+    --card-foreground: 210 40% 98%;
+    --primary: 211 100% 50%;
+    --primary-foreground: 215 28% 17%;
+    --secondary: 158 64% 52%;
+    --secondary-foreground: 215 28% 17%;
+    --muted: 215 28% 25%;
+    --muted-foreground: 215 20% 65%;
+    --border: 215 28% 25%;
+    --input: 215 28% 25%;
+    --input-border: 215 28% 35%;
+    --sidebar-bg: 56 10% 95%; /* Keep same in dark mode for now */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar while maintaining scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
