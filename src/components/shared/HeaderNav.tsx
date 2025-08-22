@@ -240,7 +240,7 @@ const HeaderNav = () => {
           </div>
           
           {/* Center - Search Bar */}
-          <div className={`flex-1 max-w-2xl mx-4 relative transition-all duration-300 ${isRightPaneOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          <div className={`flex-1 max-w-md lg:max-w-lg mx-4 relative transition-all duration-300 ${isRightPaneOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
             {/* Desktop Search Bar */}
             <div 
               className={`hidden lg:block relative cursor-pointer transition-opacity duration-200 ${isCommandOpen ? 'opacity-0' : 'opacity-100'}`}
@@ -382,7 +382,7 @@ const HeaderNav = () => {
           </div>
           
           {/* Right side navigation */}
-          <div className={`flex items-center space-x-1 lg:space-x-2 justify-end transition-all duration-300 ${isRightPaneOpen ? 'lg:w-20 lg:mr-96' : 'lg:w-48'}`}>
+          <div className={`flex items-center space-x-0.5 justify-end transition-all duration-300 ${isRightPaneOpen ? 'lg:w-20 lg:mr-96' : 'lg:w-48'}`}>
             {/* Mobile - Icons only */}
             <Button 
               variant="ghost" 
@@ -416,18 +416,18 @@ const HeaderNav = () => {
             </Button>
             
             {/* Desktop - Full Navigation */}
-            <Button variant="ghost" size="sm" className="hidden lg:flex text-muted-foreground hover:text-foreground items-center space-x-1">
+            <Button variant="ghost" size="sm" className="hidden lg:flex text-muted-foreground hover:text-foreground items-center space-x-0.5">
               <Bell className="h-4 w-4" />
               <span className={`text-xs transition-all duration-300 ${isRightPaneOpen ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>Notifications</span>
             </Button>
-            <Button variant="ghost" size="sm" className="hidden lg:flex text-muted-foreground hover:text-foreground items-center space-x-1">
+            <Button variant="ghost" size="sm" className="hidden lg:flex text-muted-foreground hover:text-foreground items-center space-x-0.5">
               <ShoppingCart className="h-4 w-4" />
               <span className={`text-xs transition-all duration-300 ${isRightPaneOpen ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>Price preview</span>
             </Button>
             <Button 
               variant="ghost" 
               size="sm" 
-              className="hidden lg:flex text-muted-foreground hover:text-foreground items-center space-x-1"
+              className="hidden lg:flex text-muted-foreground hover:text-foreground items-center space-x-0.5"
               onClick={() => setIsRightPaneOpen(true)}
             >
               <HelpCircle className="h-4 w-4" />
