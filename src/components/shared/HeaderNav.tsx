@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Bell, HelpCircle, Search, Menu, X, ChevronDown, ChevronRight, ShoppingCart, Clock } from 'lucide-react';
+import { Bell, HelpCircle, Search, Menu, X, ChevronDown, ChevronRight, ShoppingCart, Clock, Filter } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
@@ -22,7 +22,42 @@ const HeaderNav = () => {
   const [selectedChips, setSelectedChips] = useState<string[]>([]);
   const [isRightPaneOpen, setIsRightPaneOpen] = useState(false);
   const [initialSearchQuery, setInitialSearchQuery] = useState<string>('');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const taxTopics = [
+    'Wages and Salaries (W-2)',
+    'Self-employment income and expenses',
+    'Unemployment and paid family leave',
+    'Refunds Received for State/Local Tax Returns',
+    'Other 1099-G Income',
+    'Form 1099-NEC',
+    'Form 1099-MISC',
+    'Form 1099-K',
+    'Interest on 1099-INT',
+    'Dividends on 1099-DIV',
+    'Stocks, Cryptocurrency, Mutual Funds, Bonds, Other (1099-B)',
+    'Capital Loss Carryover',
+    '1099-OID, Foreign Accounts',
+    'Interest from Seller-Financed Loans',
+    'Undistributed Capital Gains',
+    'Contracts and Straddles',
+    'ISO Exercise and Hold',
+    'IRA, 401(k), Pension Plan Withdrawals (1099-R)',
+    'Social Security (SSA-1099, RRB-1099)',
+    'Canadian Registered Pension Income',
+    'Rental Properties and Royalties (Sch E)',
+    'Farm Income and Farm Rental',
+    'Estimated Tax Payments',
+    'Self-Employed Health Insurance Paid',
+    'Self-Employment Retirement Plans',
+    'Net Operating Loss/QBI Carryforward Loss',
+    'Sale of Business Property',
+    'Business Credits',
+    'Schedule K-1',
+    'Schedule Q',
+    '1099-SA, HSA, MSA'
+  ];
 
   const handleBadgeClick = (badgeText: string) => {
     if (!selectedChips.includes(badgeText)) {
@@ -264,7 +299,7 @@ const HeaderNav = () => {
 
             {/* Expanded Search Dialog */}
             {isCommandOpen && (
-              <div className="fixed lg:absolute top-0 left-0 right-0 lg:left-0 lg:right-0 z-50 bg-white border border-border lg:rounded-lg shadow-lg w-full lg:w-auto">
+              <div className="fixed lg:absolute top-0 left-0 right-0 lg:left-0 lg:right-0 z-50 bg-white border border-border lg:rounded-lg shadow-lg w-full lg:w-auto relative">
                 <Command className="w-full">
                   <div className="flex items-center border-b relative">
                     <div className="flex items-center flex-1 px-3 py-2 min-h-[44px] flex-wrap gap-1">
@@ -302,72 +337,104 @@ const HeaderNav = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => setIsCommandOpen(false)}
+                      onClick={() => setIsFilterOpen(!isFilterOpen)}
                       className="mr-3 h-8 w-8 p-0 flex-shrink-0"
                     >
-                      <X className="h-4 w-4" />
+                      <Filter className={`h-4 w-4 transition-transform duration-200 ${isFilterOpen ? 'rotate-180' : 'rotate-0'}`} />
                     </Button>
                   </div>
                   
-                  {/* Search Categories */}
-                  <div className="flex flex-wrap gap-2 p-3">
-                    <Badge 
-                      variant="secondary" 
-                      className="cursor-pointer hover:opacity-80"
-                      style={{ backgroundColor: '#ebebeb', color: '#333' }}
-                      onClick={() => handleBadgeClick('W-2')}
-                    >
-                      W-2
-                    </Badge>
-                    <Badge 
-                      variant="secondary" 
-                      className="cursor-pointer hover:opacity-80"
-                      style={{ backgroundColor: '#ebebeb', color: '#333' }}
-                      onClick={() => handleBadgeClick('Form 1040')}
-                    >
-                      Form 1040
-                    </Badge>
-                    <Badge 
-                      variant="secondary" 
-                      className="cursor-pointer hover:opacity-80"
-                      style={{ backgroundColor: '#ebebeb', color: '#333' }}
-                      onClick={() => handleBadgeClick('Federal Taxes')}
-                    >
-                      Federal Taxes
-                    </Badge>
-                    <Badge 
-                      variant="secondary" 
-                      className="cursor-pointer hover:opacity-80"
-                      style={{ backgroundColor: '#ebebeb', color: '#333' }}
-                      onClick={() => handleBadgeClick('State Taxes')}
-                    >
-                      State Taxes
-                    </Badge>
-                  </div>
+                  {/* Normal Search Content - visible by default */}
+                  {!isFilterOpen && (
+                    <>
+                      {/* Search Categories */}
+                      <div className="flex flex-wrap gap-2 p-3">
+                        <Badge 
+                          variant="secondary" 
+                          className="cursor-pointer hover:opacity-80"
+                          style={{ backgroundColor: '#ebebeb', color: '#333' }}
+                          onClick={() => handleBadgeClick('W-2')}
+                        >
+                          W-2
+                        </Badge>
+                        <Badge 
+                          variant="secondary" 
+                          className="cursor-pointer hover:opacity-80"
+                          style={{ backgroundColor: '#ebebeb', color: '#333' }}
+                          onClick={() => handleBadgeClick('Form 1040')}
+                        >
+                          Form 1040
+                        </Badge>
+                        <Badge 
+                          variant="secondary" 
+                          className="cursor-pointer hover:opacity-80"
+                          style={{ backgroundColor: '#ebebeb', color: '#333' }}
+                          onClick={() => handleBadgeClick('Federal Taxes')}
+                        >
+                          Federal Taxes
+                        </Badge>
+                        <Badge 
+                          variant="secondary" 
+                          className="cursor-pointer hover:opacity-80"
+                          style={{ backgroundColor: '#ebebeb', color: '#333' }}
+                          onClick={() => handleBadgeClick('State Taxes')}
+                        >
+                          State Taxes
+                        </Badge>
+                      </div>
 
-                  <CommandList className="max-h-[300px]">
-                    <CommandEmpty>No results found.</CommandEmpty>
-                    <CommandGroup heading="Suggested searches">
-                      <CommandItem className="cursor-pointer" onSelect={() => handleSearchItemClick('Can you explain Form 1040?')}>
-                        <Search className="mr-2 h-4 w-4" />
-                        <span>Can you explain Form 1040?</span>
-                      </CommandItem>
-                      <CommandItem className="cursor-pointer" onSelect={() => handleSearchItemClick('How can I file an extension for my state taxes?')}>
-                        <Search className="mr-2 h-4 w-4" />
-                        <span>How can I file an extension for my state taxes?</span>
-                      </CommandItem>
-                      <CommandItem className="cursor-pointer" onSelect={() => handleSearchItemClick('How do I file an IRS tax extension?')}>
-                        <Search className="mr-2 h-4 w-4" />
-                        <span>How do I file an IRS tax extension?</span>
-                      </CommandItem>
-                    </CommandGroup>
-                    <CommandGroup heading="Recent searches">
-                      <CommandItem onSelect={() => handleSearchItemClick('I have three kids, two in college, one lives with their dad')}>
-                        <Clock className="mr-2 h-4 w-4" />
-                        <span>I have three kids, two in college, one lives with their dad</span>
-                      </CommandItem>
-                    </CommandGroup>
-                  </CommandList>
+                      <CommandList className="max-h-[300px]">
+                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandGroup heading="Suggested searches">
+                          <CommandItem className="cursor-pointer" onSelect={() => handleSearchItemClick('Can you explain Form 1040?')}>
+                            <Search className="mr-2 h-4 w-4" />
+                            <span>Can you explain Form 1040?</span>
+                          </CommandItem>
+                          <CommandItem className="cursor-pointer" onSelect={() => handleSearchItemClick('How can I file an extension for my state taxes?')}>
+                            <Search className="mr-2 h-4 w-4" />
+                            <span>How can I file an extension for my state taxes?</span>
+                          </CommandItem>
+                          <CommandItem className="cursor-pointer" onSelect={() => handleSearchItemClick('How do I file an IRS tax extension?')}>
+                            <Search className="mr-2 h-4 w-4" />
+                            <span>How do I file an IRS tax extension?</span>
+                          </CommandItem>
+                        </CommandGroup>
+                        <CommandGroup heading="Recent searches">
+                          <CommandItem onSelect={() => handleSearchItemClick('I have three kids, two in college, one lives with their dad')}>
+                            <Clock className="mr-2 h-4 w-4" />
+                            <span>I have three kids, two in college, one lives with their dad</span>
+                          </CommandItem>
+                        </CommandGroup>
+                      </CommandList>
+                    </>
+                  )}
+
+
+                  {/* Filter Overlay - covers the search categories and results area */}
+                  {isFilterOpen && (
+                    <div className="absolute top-12 left-0 right-0 bg-white z-10 p-4 border-t border-border">{/* Positioned below the input bar with full height */}
+                      <div className="space-y-3">
+                        <h4 className="font-medium text-sm">Filter by</h4>
+                        <div className="flex flex-col gap-1">
+                          {taxTopics.map((topic, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="cursor-pointer hover:opacity-80 text-xs py-0.5 px-1.5 h-auto w-fit inline-block"
+                              style={{ backgroundColor: '#e3e3e3', borderColor: '#e3e3e3', color: '#333' }}
+                              onClick={() => {
+                                handleBadgeClick(topic);
+                                setIsFilterOpen(false);
+                              }}
+                            >
+                              {topic}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                 </Command>
               </div>
             )}
