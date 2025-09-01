@@ -68,7 +68,7 @@ const LoginScreen = () => {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your password"
+                      placeholder="Enter any 6+ characters password"
                       variant="tax"
                       className="pr-10"
                       required
